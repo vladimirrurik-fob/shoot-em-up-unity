@@ -1,23 +1,33 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    [CreateAssetMenu(
-        fileName = "BulletConfig",
-        menuName = "Bullets/New BulletConfig"
-    )]
+    [CreateAssetMenu(fileName = "BulletConfig", menuName = "Bullets/New BulletConfig")]
     public sealed class BulletConfig : ScriptableObject
     {
         [SerializeField]
-        public PhysicsLayer physicsLayer;
+        [FormerlySerializedAs("physicsLayer")]
+        private PhysicsLayer _physicsLayer;
 
         [SerializeField]
-        public Color color;
+        [FormerlySerializedAs("color")]
+        private Color _color;
 
         [SerializeField]
-        public int damage;
+        [FormerlySerializedAs("damage")]
+        private int _damage;
 
         [SerializeField]
-        public float speed;
+        [FormerlySerializedAs("speed")]
+        private float _speed;
+
+        public PhysicsLayer PhysicsLayer => this._physicsLayer;
+
+        public Color Color => this._color;
+
+        public int Damage => this._damage;
+
+        public float Speed => this._speed;
     }
 }

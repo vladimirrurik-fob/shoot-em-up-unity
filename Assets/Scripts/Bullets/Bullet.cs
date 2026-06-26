@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
@@ -7,28 +8,24 @@ namespace ShootEmUp
     {
         public event Action<Bullet, Collision2D> OnCollisionEntered;
 
-        [NonSerialized] public bool isPlayer;
-        [NonSerialized] public int damage;
+        [SerializeField]
+        [FormerlySerializedAs("rigidbody2D")]
+        private Rigidbody2D _rigidbody2D;
 
         [SerializeField]
-        private Rigidbody2D rigidbody2D;
+        [FormerlySerializedAs("spriteRenderer")]
+        private SpriteRenderer _spriteRenderer;
 
-        [SerializeField]
-        private SpriteRenderer spriteRenderer;
+        private Team _team;
+        private int _damage;
+
+        public Team Team => this._team;
+
+        public int Damage => this._damage;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             this.OnCollisionEntered?.Invoke(this, collision);
-        }
-
-        public void SetVelocity(Vector2 velocity)
-        {
-            this.rigidbody2D.linearVelocity = velocity;
-        }
-
-        public void SetPhysicsLayer(int physicsLayer)
-        {
-            this.gameObject.layer = physicsLayer;
         }
 
         public void SetPosition(Vector3 position)
@@ -36,9 +33,25 @@ namespace ShootEmUp
             this.transform.position = position;
         }
 
+        public void SetVelocity(Vector2 velocity)
+        {
+            this._rigidbody2D.linearVelocity = velocity;
+        }
+
         public void SetColor(Color color)
         {
-            this.spriteRenderer.color = color;
+            this._spriteRenderer.color = color;
+        }
+
+        public void SetPhysicsLayer(int physicsLayer)
+        {
+            this.gameObject.layer = physicsLayer;
+        }
+
+        public void Setup(Team team, int damage)
+        {
+            this._team = team;
+            this._damage = damage;
         }
     }
 }

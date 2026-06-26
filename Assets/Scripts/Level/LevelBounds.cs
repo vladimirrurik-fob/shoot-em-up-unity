@@ -1,29 +1,34 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
     public sealed class LevelBounds : MonoBehaviour
     {
         [SerializeField]
-        private Transform leftBorder;
+        [FormerlySerializedAs("leftBorder")]
+        private Transform _leftBorder;
 
         [SerializeField]
-        private Transform rightBorder;
+        [FormerlySerializedAs("rightBorder")]
+        private Transform _rightBorder;
 
         [SerializeField]
-        private Transform downBorder;
+        [FormerlySerializedAs("downBorder")]
+        private Transform _downBorder;
 
         [SerializeField]
-        private Transform topBorder;
-        
+        [FormerlySerializedAs("topBorder")]
+        private Transform _topBorder;
+
         public bool InBounds(Vector3 position)
         {
-            var positionX = position.x;
-            var positionY = position.y;
-            return positionX > this.leftBorder.position.x
-                   && positionX < this.rightBorder.position.x
-                   && positionY > this.downBorder.position.y
-                   && positionY < this.topBorder.position.y;
+            float positionX = position.x;
+            float positionY = position.y;
+            return positionX > this._leftBorder.position.x
+                   && positionX < this._rightBorder.position.x
+                   && positionY > this._downBorder.position.y
+                   && positionY < this._topBorder.position.y;
         }
     }
 }

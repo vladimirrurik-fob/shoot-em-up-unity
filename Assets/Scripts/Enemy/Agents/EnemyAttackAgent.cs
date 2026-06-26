@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
@@ -8,48 +9,58 @@ namespace ShootEmUp
 
         public event FireHandler OnFire;
 
-        [SerializeField] private WeaponComponent weaponComponent;
-        [SerializeField] private EnemyMoveAgent moveAgent;
-        [SerializeField] private float countdown;
+        [SerializeField]
+        [FormerlySerializedAs("weaponComponent")]
+        private WeaponComponent _weaponComponent;
 
-        private GameObject target;
-        private float currentTime;
+        [SerializeField]
+        [FormerlySerializedAs("moveAgent")]
+        private EnemyMoveAgent _moveAgent;
+
+        [SerializeField]
+        [FormerlySerializedAs("countdown")]
+        private float _countdown = 1.0f;
+
+        private GameObject _target;
+        private IPlayerHealth _targetHealth;
+        private float _currentTime;
 
         public void SetTarget(GameObject target)
         {
-            this.target = target;
+            this._target = target;
+            this._targetHealth = target.GetComponent<IPlayerHealth>();
         }
 
         public void Reset()
         {
-            this.currentTime = this.countdown;
+            this._currentTime = this._countdown;
         }
 
         private void FixedUpdate()
         {
-            if (!this.moveAgent.IsReached)
-            {
-                return;
-            }
-            
-            if (!this.target.GetComponent<HitPointsComponent>().IsHitPointsExists())
+            if (!this._moveAgent.IsReached)
             {
                 return;
             }
 
-            this.currentTime -= Time.fixedDeltaTime;
-            if (this.currentTime <= 0)
+            if (this._targetHealth == null || !this._targetHealth.IsAlive)
+            {
+                return;
+            }
+
+            this._currentTime -= Time.fixedDeltaTime;
+            if (this._currentTime <= 0.0f)
             {
                 this.Fire();
-                this.currentTime += this.countdown;
+                this._currentTime += this._countdown;
             }
         }
 
         private void Fire()
         {
-            var startPosition = this.weaponComponent.Position;
-            var vector = (Vector2) this.target.transform.position - startPosition;
-            var direction = vector.normalized;
+            Vector2 startPosition = this._weaponComponent.Position;
+            Vector2 vector = (Vector2)this._target.transform.position - startPosition;
+            Vector2 direction = vector.normalized;
             this.OnFire?.Invoke(this.gameObject, startPosition, direction);
         }
     }
