@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour
+    public sealed class EnemyMoveAgent : MonoBehaviour, IGameFixedUpdateListener
     {
         public bool IsReached => this._agent != null && this._agent.IsReached;
 
@@ -20,17 +20,12 @@ namespace ShootEmUp
             this._agent.SetDestination(endPoint);
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float deltaTime)
         {
-            if (this._agent == null)
-            {
-                return;
-            }
-
             Vector2 direction = this._agent.NextDirection(this.transform.position);
             if (direction.sqrMagnitude > 0.0f)
             {
-                this._mover.Move(direction * Time.fixedDeltaTime);
+                this._mover.Move(direction * deltaTime);
             }
         }
     }

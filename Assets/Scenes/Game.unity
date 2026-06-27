@@ -1166,6 +1166,9 @@ GameObject:
   - component: {fileID: 3951702117947426122}
   - component: {fileID: 3951702117947426123}
   - component: {fileID: 3951702117947426124}
+  - component: {fileID: 3951702117947426127}
+  - component: {fileID: 3951702117947426126}
+  - component: {fileID: 3951702117947426125}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -1218,8 +1221,48 @@ MonoBehaviour:
   _playerHealth: {fileID: 3926786964592264469}
   _playerAttack: {fileID: 4414282821800802405}
   _gameManager: {fileID: 3951702117947426123}
+  _gameLoop: {fileID: 3951702117947426127}
+  _countdownManager: {fileID: 3951702117947426126}
+  _gameUI: {fileID: 3951702117947426125}
   _enemyManager: {fileID: 562298205}
+  _enemyPool: {fileID: 562298207}
   _bulletSystem: {fileID: 363245577}
+--- !u!114 &3951702117947426125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e22456d2fb04396a9313d0da69b3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.GameUI
+--- !u!114 &3951702117947426126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc728dd804bcf4f1ea35e8b382897424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.CountdownManager
+--- !u!114 &3951702117947426127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107ef168788764887818da611a201fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.GameLoop
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   serializedVersion: 3

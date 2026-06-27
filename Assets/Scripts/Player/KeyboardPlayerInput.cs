@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class KeyboardPlayerInput : MonoBehaviour, IPlayerInput
+    public sealed class KeyboardPlayerInput : MonoBehaviour, IGameUpdateListener, IPlayerInput
     {
         public Vector2 MoveDirection { get; private set; }
 
         private bool _fireRequested;
 
-        private void Update()
+        public void OnUpdate(float deltaTime)
         {
             this.MoveDirection = this.ReadMoveDirection();
 

@@ -27,6 +27,7 @@ namespace ShootEmUp
         [FormerlySerializedAs("prefab")]
         private GameObject _prefab;
 
+        private GameManager _gameManager;
         private ObjectPool<GameObject> _pool;
 
         private void Awake()
@@ -35,11 +36,11 @@ namespace ShootEmUp
                 factory: () => Instantiate(this._prefab, this._container),
                 onGet: enemy => enemy.transform.SetParent(this._worldTransform),
                 onRelease: enemy => enemy.transform.SetParent(this._container));
+        }
 
-            for (int i = 0; i < 7; i++)
-            {
-                this._pool.Release(Instantiate(this._prefab, this._container));
-            }
+        public void Construct(GameManager gameManager)
+        {
+            this._gameManager = gameManager;
         }
 
         public GameObject SpawnEnemy()
@@ -60,11 +61,13 @@ namespace ShootEmUp
             var healthAdapter = enemy.GetComponent<EnemyHealth>();
             healthAdapter.Construct(new Health(healthAdapter.HitPoints));
 
+            this._gameManager.AddListener(enemy);
             return enemy;
         }
 
         public void UnspawnEnemy(GameObject enemy)
         {
+            this._gameManager.RemoveListener(enemy);
             this._pool.Release(enemy);
         }
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class PlayerAttack : MonoBehaviour
+    public sealed class PlayerAttack : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField]
         private BulletConfig _bulletConfig;
@@ -22,7 +22,7 @@ namespace ShootEmUp
             this._weapon = this.GetComponent<WeaponComponent>();
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float deltaTime)
         {
             if (this._launcher == null)
             {

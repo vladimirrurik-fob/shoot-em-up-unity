@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField]
         private EnemyPool _enemyPool;
@@ -17,6 +16,7 @@ namespace ShootEmUp
         private float _spawnInterval = 1.0f;
 
         private IBulletLauncher _launcher;
+        private float _spawnTimer;
         private readonly HashSet<GameObject> _activeEnemies = new();
 
         public void Construct(IBulletLauncher launcher)
@@ -24,24 +24,27 @@ namespace ShootEmUp
             this._launcher = launcher;
         }
 
-        private IEnumerator Start()
+        public void OnFixedUpdate(float deltaTime)
         {
-            while (true)
+            this._spawnTimer += deltaTime;
+            if (this._spawnTimer < this._spawnInterval)
             {
-                yield return new WaitForSeconds(this._spawnInterval);
+                return;
+            }
 
-                GameObject enemy = this._enemyPool.SpawnEnemy();
-                if (enemy != null && this._activeEnemies.Add(enemy))
+            this._spawnTimer -= this._spawnInterval;
+
+            GameObject enemy = this._enemyPool.SpawnEnemy();
+            if (enemy != null && this._activeEnemies.Add(enemy))
+            {
+                if (enemy.TryGetComponent(out IEnemyHealth health))
                 {
-                    if (enemy.TryGetComponent(out IEnemyHealth health))
-                    {
-                        health.Died += this.OnEnemyDied;
-                    }
+                    health.Died += this.OnEnemyDied;
+                }
 
-                    if (enemy.TryGetComponent(out EnemyAttackAgent agent))
-                    {
-                        agent.OnFire += this.OnFire;
-                    }
+                if (enemy.TryGetComponent(out EnemyAttackAgent agent))
+                {
+                    agent.OnFire += this.OnFire;
                 }
             }
         }

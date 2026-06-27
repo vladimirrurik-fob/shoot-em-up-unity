@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour
+    public sealed class LevelBackground : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField]
         [FormerlySerializedAs("m_params")]
@@ -25,9 +25,9 @@ namespace ShootEmUp
                 position.z);
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float deltaTime)
         {
-            this._transform.position = this._scroller.Next(this._transform.position, Time.fixedDeltaTime);
+            this._transform.position = this._scroller.Next(this._transform.position, deltaTime);
         }
 
         [Serializable]

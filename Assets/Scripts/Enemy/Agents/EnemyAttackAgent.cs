@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour, IGameFixedUpdateListener
     {
         public delegate void FireHandler(GameObject enemy, Vector2 position, Vector2 direction);
 
@@ -35,7 +35,7 @@ namespace ShootEmUp
             this._targetHealth = target != null ? target.GetComponent<IPlayerHealth>() : null;
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float deltaTime)
         {
             if (this._attacker == null || this._targetHealth == null || this._target == null)
             {
@@ -47,7 +47,7 @@ namespace ShootEmUp
                 canFire,
                 this._weapon.Position,
                 (Vector2)this._target.transform.position,
-                Time.fixedDeltaTime);
+                deltaTime);
         }
 
         private void OnFireRequested(Vector2 position, Vector2 direction)

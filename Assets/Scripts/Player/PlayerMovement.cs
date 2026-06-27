@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class PlayerMovement : MonoBehaviour
+    public sealed class PlayerMovement : MonoBehaviour, IGameFixedUpdateListener
     {
         private PlayerMovementController _controller;
 
@@ -13,9 +13,9 @@ namespace ShootEmUp
             this._controller = new PlayerMovementController(input, mover);
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float deltaTime)
         {
-            this._controller.Tick(Time.fixedDeltaTime);
+            this._controller.Tick(deltaTime);
         }
     }
 }
