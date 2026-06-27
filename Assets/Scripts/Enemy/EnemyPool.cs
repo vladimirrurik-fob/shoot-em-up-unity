@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,40 +27,45 @@ namespace ShootEmUp
         [FormerlySerializedAs("prefab")]
         private GameObject _prefab;
 
-        private readonly Queue<GameObject> _enemyPool = new();
+        private ObjectPool<GameObject> _pool;
 
         private void Awake()
         {
+            this._pool = new ObjectPool<GameObject>(
+                factory: () => Instantiate(this._prefab, this._container),
+                onGet: enemy => enemy.transform.SetParent(this._worldTransform),
+                onRelease: enemy => enemy.transform.SetParent(this._container));
+
             for (int i = 0; i < 7; i++)
             {
-                GameObject enemy = Instantiate(this._prefab, this._container);
-                this._enemyPool.Enqueue(enemy);
+                this._pool.Release(Instantiate(this._prefab, this._container));
             }
         }
 
         public GameObject SpawnEnemy()
         {
-            if (!this._enemyPool.TryDequeue(out GameObject enemy))
-            {
-                return null;
-            }
+            GameObject enemy = this._pool.Get();
 
-            enemy.transform.SetParent(this._worldTransform);
+            enemy.transform.position = this._enemyPositions.RandomSpawnPosition().position;
 
-            Transform spawnPosition = this._enemyPositions.RandomSpawnPosition();
-            enemy.transform.position = spawnPosition.position;
+            var moveAgent = new MoveAgent();
+            var moveAdapter = enemy.GetComponent<EnemyMoveAgent>();
+            moveAdapter.Construct(moveAgent);
+            moveAdapter.SetDestination(this._enemyPositions.RandomAttackPosition().position);
 
-            Transform attackPosition = this._enemyPositions.RandomAttackPosition();
-            enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(this._character);
+            var attackAdapter = enemy.GetComponent<EnemyAttackAgent>();
+            attackAdapter.Construct(new EnemyAttacker(attackAdapter.Countdown));
+            attackAdapter.SetTarget(this._character);
+
+            var healthAdapter = enemy.GetComponent<EnemyHealth>();
+            healthAdapter.Construct(new Health(healthAdapter.HitPoints));
 
             return enemy;
         }
 
         public void UnspawnEnemy(GameObject enemy)
         {
-            enemy.transform.SetParent(this._container);
-            this._enemyPool.Enqueue(enemy);
+            this._pool.Release(enemy);
         }
     }
 }

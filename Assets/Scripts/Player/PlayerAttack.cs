@@ -5,13 +5,16 @@ namespace ShootEmUp
     public sealed class PlayerAttack : MonoBehaviour
     {
         [SerializeField]
-        private BulletSystem _bulletSystem;
-
-        [SerializeField]
         private BulletConfig _bulletConfig;
 
+        private IBulletLauncher _launcher;
         private IPlayerInput _input;
         private WeaponComponent _weapon;
+
+        public void Construct(IBulletLauncher launcher)
+        {
+            this._launcher = launcher;
+        }
 
         private void Awake()
         {
@@ -21,6 +24,11 @@ namespace ShootEmUp
 
         private void FixedUpdate()
         {
+            if (this._launcher == null)
+            {
+                return;
+            }
+
             if (this._input.ConsumeFireRequest())
             {
                 this.Fire();
@@ -32,7 +40,7 @@ namespace ShootEmUp
             Vector3 position = this._weapon.Position;
             Vector3 velocity = this._weapon.Rotation * Vector3.up * this._bulletConfig.Speed;
 
-            this._bulletSystem.FlyBulletByArgs(new BulletSystem.Args(
+            this._launcher.Launch(new BulletArgs(
                 position,
                 velocity,
                 this._bulletConfig.Color,

@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 namespace ShootEmUp
 {
-    public sealed class MoveComponent : MonoBehaviour
+    public sealed class MoveComponent : MonoBehaviour, IMover
     {
         [SerializeField]
         [FormerlySerializedAs("rigidbody2D")]
@@ -13,9 +13,9 @@ namespace ShootEmUp
         [FormerlySerializedAs("speed")]
         private float _speed = 5.0f;
 
-        public void MoveByRigidbodyVelocity(Vector2 vector)
+        public void Move(Vector2 direction)
         {
-            Vector2 nextPosition = this._rigidbody2D.position + vector * this._speed;
+            Vector2 nextPosition = this._rigidbody2D.position + direction * this._speed;
             this._rigidbody2D.MovePosition(nextPosition);
         }
     }

@@ -401,7 +401,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPool: {fileID: 562298207}
-  _bulletSystem: {fileID: 363245577}
   _enemyBulletConfig: {fileID: 11400000, guid: 08a93575ad0f34c719f79ac5eb4013b8, type: 2}
   _spawnInterval: 1
 --- !u!114 &562298207
@@ -1166,6 +1165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3951702117947426122}
   - component: {fileID: 3951702117947426123}
+  - component: {fileID: 3951702117947426124}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -1202,7 +1202,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697fe7ba192e484db495320b9c01bcd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3951702117947426124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3951702117947426121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfad443c84dca4f25966c51a5d9633b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShootEmUp.GameInstaller
+  _playerHitPoints: 5
   _playerHealth: {fileID: 3926786964592264469}
+  _playerAttack: {fileID: 4414282821800802405}
+  _gameManager: {fileID: 3951702117947426123}
+  _enemyManager: {fileID: 562298205}
+  _bulletSystem: {fileID: 363245577}
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   serializedVersion: 3
@@ -1275,6 +1292,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3926786964592264468}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4414282821800802405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5100798563913446416, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3926786964592264468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414282821800802397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6838cf30653444fb310c53a7a838a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShootEmUp.PlayerAttack
 --- !u!1 &4788406047096451828
 GameObject:
   m_ObjectHideFlags: 0

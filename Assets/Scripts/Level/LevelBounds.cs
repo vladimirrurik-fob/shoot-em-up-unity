@@ -21,14 +21,18 @@ namespace ShootEmUp
         [FormerlySerializedAs("topBorder")]
         private Transform _topBorder;
 
+        private Bounds _bounds;
+
+        private void Awake()
+        {
+            Vector2 min = new Vector2(this._leftBorder.position.x, this._downBorder.position.y);
+            Vector2 max = new Vector2(this._rightBorder.position.x, this._topBorder.position.y);
+            this._bounds = new Bounds(min, max);
+        }
+
         public bool InBounds(Vector3 position)
         {
-            float positionX = position.x;
-            float positionY = position.y;
-            return positionX > this._leftBorder.position.x
-                   && positionX < this._rightBorder.position.x
-                   && positionY > this._downBorder.position.y
-                   && positionY < this._topBorder.position.y;
+            return this._bounds.InBounds(position);
         }
     }
 }

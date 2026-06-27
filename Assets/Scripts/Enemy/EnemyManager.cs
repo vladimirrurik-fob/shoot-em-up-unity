@@ -11,15 +11,18 @@ namespace ShootEmUp
         private EnemyPool _enemyPool;
 
         [SerializeField]
-        private BulletSystem _bulletSystem;
-
-        [SerializeField]
         private BulletConfig _enemyBulletConfig;
 
         [SerializeField]
         private float _spawnInterval = 1.0f;
 
+        private IBulletLauncher _launcher;
         private readonly HashSet<GameObject> _activeEnemies = new();
+
+        public void Construct(IBulletLauncher launcher)
+        {
+            this._launcher = launcher;
+        }
 
         private IEnumerator Start()
         {
@@ -65,7 +68,7 @@ namespace ShootEmUp
 
         private void OnFire(GameObject enemy, Vector2 position, Vector2 direction)
         {
-            this._bulletSystem.FlyBulletByArgs(new BulletSystem.Args(
+            this._launcher.Launch(new BulletArgs(
                 position,
                 direction * this._enemyBulletConfig.Speed,
                 this._enemyBulletConfig.Color,
