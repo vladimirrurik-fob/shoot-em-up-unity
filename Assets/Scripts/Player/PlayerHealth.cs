@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VContainer;
 
 namespace ShootEmUp
 {
@@ -11,10 +12,12 @@ namespace ShootEmUp
 
         private Health _health;
 
-        public void Construct(Health health)
+        [Inject]
+        public void Construct(Health health, GameManager gameManager)
         {
             this._health = health;
             this._health.Died += this.OnHealthDied;
+            this.Died += gameManager.FinishGame;
         }
 
         public void TakeDamage(int damage)

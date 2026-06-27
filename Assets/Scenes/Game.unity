@@ -1143,18 +1143,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9699e7e809fd44b2bbf3d30c951ecbd2, type: 3}
---- !u!114 &3926786964592264469 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6103716326227174152, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3926786964592264468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414282821800802397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0e4fc86b5284b32be51e45b8e4f1d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShootEmUp.PlayerHealth
 --- !u!1 &3951702117947426121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,11 +1152,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951702117947426122}
-  - component: {fileID: 3951702117947426123}
-  - component: {fileID: 3951702117947426124}
-  - component: {fileID: 3951702117947426127}
-  - component: {fileID: 3951702117947426126}
   - component: {fileID: 3951702117947426125}
+  - component: {fileID: 3951702117947426128}
   m_Layer: 0
   m_Name: '[GAME_SYSTEM]'
   m_TagString: Untagged
@@ -1193,40 +1178,6 @@ Transform:
   - {fileID: 562298204}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3951702117947426123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3951702117947426121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697fe7ba192e484db495320b9c01bcd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3951702117947426124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3951702117947426121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfad443c84dca4f25966c51a5d9633b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShootEmUp.GameInstaller
-  _playerHitPoints: 5
-  _playerHealth: {fileID: 3926786964592264469}
-  _playerAttack: {fileID: 4414282821800802405}
-  _gameManager: {fileID: 3951702117947426123}
-  _gameLoop: {fileID: 3951702117947426127}
-  _countdownManager: {fileID: 3951702117947426126}
-  _gameUI: {fileID: 3951702117947426125}
-  _enemyManager: {fileID: 562298205}
-  _enemyPool: {fileID: 562298207}
-  _bulletSystem: {fileID: 363245577}
 --- !u!114 &3951702117947426125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,7 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e22456d2fb04396a9313d0da69b3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: ShootEmUp::ShootEmUp.GameUI
---- !u!114 &3951702117947426126
+--- !u!114 &3951702117947426128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1248,21 +1199,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3951702117947426121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc728dd804bcf4f1ea35e8b382897424, type: 3}
+  m_Script: {fileID: 11500000, guid: 452aa606a7c1c4ec8b6aabc91c2789af, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.CountdownManager
---- !u!114 &3951702117947426127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3951702117947426121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107ef168788764887818da611a201fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.GameLoop
+  m_EditorClassIdentifier: ShootEmUp::ShootEmUp.GameLifetimeScope
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  _playerHitPoints: 5
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   serializedVersion: 3
@@ -1335,18 +1279,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3926786964592264468}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4414282821800802405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5100798563913446416, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3926786964592264468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414282821800802397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6838cf30653444fb310c53a7a838a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShootEmUp.PlayerAttack
 --- !u!1 &4788406047096451828
 GameObject:
   m_ObjectHideFlags: 0

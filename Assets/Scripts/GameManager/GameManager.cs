@@ -4,22 +4,20 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class GameManager : MonoBehaviour
+    public sealed class GameManager
     {
         public GameState State { get; private set; } = GameState.Boot;
 
-        private GameLoop _gameLoop;
-        private CountdownManager _countdownManager;
+        private readonly IGameLoop _gameLoop;
 
         private readonly List<IGameStartListener> _startListeners = new();
         private readonly List<IGamePauseListener> _pauseListeners = new();
         private readonly List<IGameResumeListener> _resumeListeners = new();
         private readonly List<IGameFinishListener> _finishListeners = new();
 
-        public void Construct(GameLoop gameLoop, CountdownManager countdownManager)
+        public GameManager(IGameLoop gameLoop)
         {
             this._gameLoop = gameLoop;
-            this._countdownManager = countdownManager;
         }
 
         public void AddListener(MonoBehaviour listener)
@@ -96,13 +94,12 @@ namespace ShootEmUp
             }
 
             this.State = GameState.Countdown;
-            this._countdownManager.StartCountdown(this.BeginPlay);
         }
 
-        private void BeginPlay()
+        public void BeginPlay()
         {
             this.State = GameState.Playing;
-            this._gameLoop.enabled = true;
+            this._gameLoop.Enabled = true;
             Time.timeScale = 1.0f;
             this.Dispatch(this._startListeners, listener => listener.OnStartGame());
         }
@@ -115,7 +112,7 @@ namespace ShootEmUp
             }
 
             this.State = GameState.Paused;
-            this._gameLoop.enabled = false;
+            this._gameLoop.Enabled = false;
             Time.timeScale = 0.0f;
             this.Dispatch(this._pauseListeners, listener => listener.OnPauseGame());
         }
@@ -128,7 +125,7 @@ namespace ShootEmUp
             }
 
             this.State = GameState.Playing;
-            this._gameLoop.enabled = true;
+            this._gameLoop.Enabled = true;
             Time.timeScale = 1.0f;
             this.Dispatch(this._resumeListeners, listener => listener.OnResumeGame());
         }
@@ -141,7 +138,7 @@ namespace ShootEmUp
             }
 
             this.State = GameState.Finished;
-            this._gameLoop.enabled = false;
+            this._gameLoop.Enabled = false;
             Time.timeScale = 0.0f;
             this.Dispatch(this._finishListeners, listener => listener.OnFinishGame());
         }

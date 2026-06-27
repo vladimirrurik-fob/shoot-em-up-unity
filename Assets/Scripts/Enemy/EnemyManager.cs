@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using VContainer;
 
 namespace ShootEmUp
 {
@@ -19,6 +20,7 @@ namespace ShootEmUp
         private float _spawnTimer;
         private readonly HashSet<GameObject> _activeEnemies = new();
 
+        [Inject]
         public void Construct(IBulletLauncher launcher)
         {
             this._launcher = launcher;

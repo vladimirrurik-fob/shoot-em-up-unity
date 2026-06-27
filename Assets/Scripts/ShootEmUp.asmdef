@@ -1,7 +1,10 @@
 {
     "name": "ShootEmUp",
     "rootNamespace": "ShootEmUp",
-    "references": [],
+    "references": [
+        "VContainer",
+        "VContainer.Unity"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

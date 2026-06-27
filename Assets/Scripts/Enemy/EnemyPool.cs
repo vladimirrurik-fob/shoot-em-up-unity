@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using VContainer;
 
 namespace ShootEmUp
 {
@@ -38,6 +39,7 @@ namespace ShootEmUp
                 onRelease: enemy => enemy.transform.SetParent(this._container));
         }
 
+        [Inject]
         public void Construct(GameManager gameManager)
         {
             this._gameManager = gameManager;

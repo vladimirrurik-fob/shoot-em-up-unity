@@ -1,4 +1,5 @@
 using UnityEngine;
+using VContainer;
 
 namespace ShootEmUp
 {
@@ -11,6 +12,7 @@ namespace ShootEmUp
         private IPlayerInput _input;
         private WeaponComponent _weapon;
 
+        [Inject]
         public void Construct(IBulletLauncher launcher)
         {
             this._launcher = launcher;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using VContainer;
 
 namespace ShootEmUp
 {
@@ -12,15 +13,19 @@ namespace ShootEmUp
         IGameFinishListener
     {
         private GameManager _gameManager;
+        private ICountdown _countdown;
 
         private Button _startButton;
         private Button _pauseButton;
         private Text _countdownText;
         private Text _gameOverText;
 
-        public void Construct(GameManager gameManager)
+        [Inject]
+        public void Construct(GameManager gameManager, ICountdown countdown)
         {
             this._gameManager = gameManager;
+            this._countdown = countdown;
+            gameManager.AddListener(this);
             this.BuildUI();
         }
 
@@ -59,6 +64,7 @@ namespace ShootEmUp
         private void OnStartClicked()
         {
             this._gameManager.StartGame();
+            this._countdown.Begin(this._gameManager.BeginPlay, this.SetCountdown);
         }
 
         private void OnPauseClicked()
